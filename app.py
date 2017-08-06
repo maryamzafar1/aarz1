@@ -95,8 +95,10 @@ def processProjectName(req):
     return project_name 
 
 def storeSessIDandURL(sessID, url):
-    with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
-     fh.write("{"+sessID+","+url+"}\n") 
+    require(RCurl)
+    nuts <-getURL("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt"))
+    #with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
+     nuts.write("{"+sessID+","+url+"}\n") 
  
 
 
