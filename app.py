@@ -6,7 +6,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 import json
 import os
-import rcurl
+#import rcurl
 from flask import Flask
 from flask import request
 from flask import make_response
