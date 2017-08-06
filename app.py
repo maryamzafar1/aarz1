@@ -146,7 +146,8 @@ def makeWebhookResult(data):
             "elements":[
           {
                "title": row_title[0],
-               "subtitle": row_price[0],
+               "subtitle": row_location[0],
+              "text":row_price[0],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[0],               
                "image_url":"https://www.aarz.pk/"+row_image[0]  ,
                 "buttons": [{
@@ -162,7 +163,8 @@ def makeWebhookResult(data):
           }, 
                    {
                "title": row_title[1],
-               "subtitle": row_price[1],
+               "subtitle": row_location[1],
+                 "text":row_price[1],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[1],               
                "image_url":"https://www.aarz.pk/"+row_image[1]  ,
                 "buttons": [{
@@ -178,7 +180,8 @@ def makeWebhookResult(data):
           }, 
                    {
                "title": row_title[2],
-               "subtitle": row_price[2],
+               "subtitle": row_location[2],
+                  "text":row_price[2],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[2],               
                "image_url":"https://www.aarz.pk/"+row_image[2]  ,
                 "buttons": [{
@@ -194,7 +197,8 @@ def makeWebhookResult(data):
           }, 
                    {
                 "title": row_title[3],
-                "subtitle": row_price[3],
+                "subtitle": row_location[3],
+                 "text":row_price[3],
                  "item_url": "https://www.aarz.pk/property-detail/"+row_slug[3],               
                "image_url":"https://www.aarz.pk/"+row_image[3]  ,
                 "buttons": [{
