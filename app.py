@@ -95,7 +95,7 @@ def processProjectName(req):
     return project_name 
 
 def storeSessIDandURL(sessID, url):
-    with open("https://cdn.rawgit.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
+    with open("https://github.com/maryamzafar1/aarz1/blob/master/sess_url.txt", "a") as fh: 
      fh.write("{"+sessID+","+url+"}\n") 
  
 
