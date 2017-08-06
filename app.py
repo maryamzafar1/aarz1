@@ -99,6 +99,7 @@ def storeSessIDandURL(sessID, url):
     fh=open("sess_url.txt","a")
     fh.write("{"+sessID+","+url+"}\n") 
     fh.close()
+    print("SESSION ID",sessID)
     #with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
      
  
