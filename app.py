@@ -6,6 +6,7 @@ from urllib.request import urlopen, Request
 from urllib.error import HTTPError
 import json
 import os
+import rcurl
 from flask import Flask
 from flask import request
 from flask import make_response
@@ -95,7 +96,6 @@ def processProjectName(req):
     return project_name 
 
 def storeSessIDandURL(sessID, url):
-    library(RCurl)
     nuts <-getURL("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt")
     nuts.write("{"+sessID+","+url+"}\n") 
     #with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
