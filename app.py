@@ -149,6 +149,7 @@ def makeWebhookResult(data):
                "subtitle": row_location[0],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[0],               
                "image_url":"https://www.aarz.pk/"+row_image[0]  ,
+                "price:"row_price[0],
                 "buttons": [{
                 "type":"phone_number",
               "title":"Call Agent",
@@ -165,6 +166,7 @@ def makeWebhookResult(data):
                "subtitle": row_location[1],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[1],               
                "image_url":"https://www.aarz.pk/"+row_image[1]  ,
+                 "price:"row_price[1],
                 "buttons": [{
                 "type":"phone_number",
               "title":"Call Agent",
@@ -181,6 +183,7 @@ def makeWebhookResult(data):
                "subtitle": row_location[2],
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[2],               
                "image_url":"https://www.aarz.pk/"+row_image[2]  ,
+                "price:"row_price[2],
                 "buttons": [{
                "type":"phone_number",
               "title":"Call Agent",
@@ -197,6 +200,7 @@ def makeWebhookResult(data):
                 "subtitle": row_location[3],
                  "item_url": "https://www.aarz.pk/property-detail/"+row_slug[3],               
                "image_url":"https://www.aarz.pk/"+row_image[3]  ,
+                "price:"row_price[3],
                 "buttons": [{
                "type":"phone_number",
               "title":"Call Agent",
