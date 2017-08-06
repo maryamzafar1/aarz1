@@ -15,6 +15,7 @@ app = Flask(__name__)
 intent_name="string"
 @app.route('/webhook', methods=['POST'])
 def webhook():
+    storeSessIDandURL("bc46022b-7091-4557-a109-2f8da7deaede", "https://www.aarz.pk/buy-property/2-kanal-plot-for-sale-in-f-113-islamabad-for-rs-11-crore-100743")
     req = request.get_json(silent=True, force=True)
     print("Request:")
     print(json.dumps(req, indent=4))
@@ -23,7 +24,6 @@ def webhook():
     print("after json.dumps",res)
     r = make_response(res)
     r.headers['Content-Type'] = 'application/json'
-    storeSessIDandURL("bc46022b-7091-4557-a109-2f8da7deaede", "https://www.aarz.pk/buy-property/2-kanal-plot-for-sale-in-f-113-islamabad-for-rs-11-crore-100743")
     return r
 
 def processRequest(req):
