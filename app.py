@@ -96,8 +96,9 @@ def processProjectName(req):
 
 def storeSessIDandURL(sessID, url):
     #with open("sess_url.txt", "a") as fh:  
-    fh="https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt"
+    fh=open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt","a")
     fh.write("{"+sessID+","+url+"}\n") 
+    fh.close()
     #with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
      
  
