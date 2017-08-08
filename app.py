@@ -1,3 +1,29 @@
+
+Skip to content
+This repository
+
+    Pull requests
+    Issues
+    Marketplace
+    Gist
+
+    @maryamzafar1
+
+0
+0
+
+    2
+
+boredomed/aarz-demo
+Code
+Issues 0
+Pull requests 1
+Projects 0
+Wiki
+aarz-demo/app.py
+48b4e04 2 hours ago
+@boredomed boredomed 4.1
+executable file 265 lines (235 sloc) 9.54 KB
 #!/usr/bin/env python
 
 import urllib
@@ -15,7 +41,6 @@ app = Flask(__name__)
 intent_name="string"
 @app.route('/webhook', methods=['POST'])
 def webhook():
-    storeSessIDandURL("bc46022b-7091-4557-a109-2f8da7deaede", "https://www.aarz.pk/buy-property/2-kanal-plot-for-sale-in-f-113-islamabad-for-rs-11-crore-100743")
     req = request.get_json(silent=True, force=True)
     print("Request:")
     print(json.dumps(req, indent=4))
@@ -27,7 +52,7 @@ def webhook():
     return r
 
 def processRequest(req):
-    if req.get("result").get("action") != "property_search":
+    if req.get("result").get("action") != "final_budget":
         return {}
     global city_names
     global QR
@@ -35,11 +60,19 @@ def processRequest(req):
     intent_name=processIntentName(req)
     city_names=processlocation(req)
     property_type=processPropertyType(req)
-    maximum_value=processMaximum(req)
+    maximum_valu=processMaximum(req)
+    max_area=processAreaMax(req)
+    unit_property=processUnits(req)
+
+    maximum_value=convertMaximum(maximum_valu)
+    print(maximum_value)
+
     #baseurl = "https://aarz.pk/bot/index.php?city_name="+city_names+"&sector_name="+sector_names+"&minPrice="+maximum_value+"&type="+property_type+"&LatestProperties="+latest+"&UnitArea="+area_property+"&Unit="+unit_property+"&school="+school+"&airport="+airport+"&transport="+transport+"&security="+security+"&shopping_mall="+malls+"&fuel="+fuel
     #baseurl="https://www.aarz.pk/search/bot?postedBy=searchPage&view=&city_s="+city_names+"&price_min="+maximum_value+"&price_max=0estate_agent=&purpose=Sell&property_type="+property_type
-
-    baseurl="https://www.aarz.pk/search/bot?postedBy=searchPage&view=&city_s="+city_names+"&type="+property_type+"&price_max="+maximum_value
+    if maximum_value == 0:
+        baseurl="https://www.aarz.pk/search/bot?postedBy=searchPage&view=&city_s="+city_names+"&type="+property_type+"&land_area="+unit_property+"&min_r=0&max_r="+max_area
+    else:  
+        baseurl="https://www.aarz.pk/search/bot?postedBy=searchPage&view=&city_s="+city_names+"&type="+property_type+"&price_max="+maximum_value+"&land_area="+unit_property+"&min_r=0&max_r="+max_area
     #print("city:",city_names)
     print("url is:",baseurl)
     result = urllib.request.urlopen(baseurl).read()
@@ -87,6 +120,17 @@ def processPropertyType(req):
     propertyType = parameters.get("PropertyType")
     return propertyType
 
+def processAreaMax(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    max_area = parameters.get("max_area")
+    return max_area
+
+def processUnits(req):
+    result = req.get("result")
+    parameters = result.get("parameters")
+    units = parameters.get("Unit")
+    return units
 
 def processProjectName(req):
     result = req.get("result")
@@ -94,16 +138,29 @@ def processProjectName(req):
     project_name = parameters.get("ProjectName")
     return project_name 
 
-def storeSessIDandURL(sessID, url):
-    #with open("sess_url.txt", "a") as fh:  
-    fh=open("sess_url.txt","a")
-    fh.write("{"+sessID+","+url+"}\n") 
-    fh.close()
-    print("SESSION ID",sessID)
-    #with open("https://raw.githubusercontent.com/maryamzafar1/aarz1/master/sess_url.txt", "a") as fh: 
-     
- 
+#Price
+def convertMaximumIfWords(req):
+    price, unitt = req.split()
+    price = int(price)
+    if unitt[0] == 'l' or unitt[0] == 'L':
+        price = price * (10 ** 5)
+    elif unitt[0] == 'm' or unitt[0] == 'M':
+        price = price * (10 ** 6)
+    elif unitt[0] == 'c' or unitt[0] == 'C':
+        price = price * (10 ** 7)
+    print(price)
+    return str(price)
 
+def convertMaximumIfNumber(req):
+    price=int(req)
+    print(price)
+    return str(price)
+
+def convertMaximum(maximum_valu):
+    try:
+        return convertMaximumIfNumber(maximum_valu)
+    except ValueError:
+        return convertMaximumIfWords(maximum_valu)
 
 def makeWebhookResult(data):
      i=0
@@ -122,6 +179,8 @@ def makeWebhookResult(data):
         row_id[i]=data[i]['property_id']
         row_title[i]=data[i]['title']
         row_location[i]=data[i]['address']
+        if row_location[i] == "" or row_location[i] == " ":
+            row_location[i] = "not specified"
         row_price[i]=data[i]['price']
         row_slug[i]=data[i]['slug']
         row_number[i]=data[i]['number']
@@ -132,6 +191,7 @@ def makeWebhookResult(data):
         text_data_parts ="Here is record " + str(i+1) +":"+ row_title[i]+" in city "+row_city[i] + " price is "+ str(row_price[i])+ ". For Info about this contact at number "+str(row_number[i]) + "."
         text_data = text_data + text_data_parts	
         i+=1
+     print(row_title[0])
      variable1=str(row_number[0])
      variable2=str(row_number[1])
      variable3=str(row_number[2])
@@ -147,7 +207,7 @@ def makeWebhookResult(data):
           {
                "title": row_title[0],
                "subtitle": row_location[0]+"\nPrice: Rs."+str(row_price[0]),
-                "item_url": "https://www.aarz.pk/property-detail/"+row_slug[0],               
+              "item_url": "https://www.aarz.pk/property-detail/"+row_slug[0],               
                "image_url":"https://www.aarz.pk/"+row_image[0]  ,
                 "buttons": [{
                 "type":"phone_number",
@@ -161,7 +221,7 @@ def makeWebhookResult(data):
                    ],
           }, 
                    {
-               "title": row_title[1],
+               "title": row_title[1],             
                "subtitle": row_location[1]+"\nPrice: Rs."+str(row_price[1]),
                 "item_url": "https://www.aarz.pk/property-detail/"+row_slug[1],               
                "image_url":"https://www.aarz.pk/"+row_image[1]  ,
@@ -225,3 +285,10 @@ if __name__ == '__main__':
     print("Starting app on port %d" % port)
 
     app.run(debug=True, port=port, host='0.0.0.0')
+
+
+
+    Contact GitHub API Training Shop Blog About 
+
+    © 2017 GitHub, Inc. Terms Privacy Security Status Help 
+
