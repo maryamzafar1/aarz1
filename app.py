@@ -1,29 +1,3 @@
-
-Skip to content
-This repository
-
-    Pull requests
-    Issues
-    Marketplace
-    Gist
-
-    @maryamzafar1
-
-0
-0
-
-    2
-
-boredomed/aarz-demo
-Code
-Issues 0
-Pull requests 1
-Projects 0
-Wiki
-aarz-demo/app.py
-48b4e04 2 hours ago
-@boredomed boredomed 4.1
-executable file 265 lines (235 sloc) 9.54 KB
 #!/usr/bin/env python
 
 import urllib
@@ -285,10 +259,4 @@ if __name__ == '__main__':
     print("Starting app on port %d" % port)
 
     app.run(debug=True, port=port, host='0.0.0.0')
-
-
-
-    Contact GitHub API Training Shop Blog About 
-
-    © 2017 GitHub, Inc. Terms Privacy Security Status Help 
 
